@@ -52,51 +52,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun LemonadeApp(){
+fun LemonadeApp() {
+    var index by remember { mutableStateOf(1) }
 
-    var paintResource by remember { mutableStateOf(R.drawable.lemon_tree)}
-    var promptText by remember { mutableStateOf(R.string.prompt1) }
-    val index = 1
+    val (paintResource, promptText) = when (index) {
+        1 -> Pair(R.drawable.lemon_tree, R.string.prompt1)
+        2 -> Pair(R.drawable.lemon_squeeze, R.string.prompt2)
+        3 -> Pair(R.drawable.lemon_drink, R.string.prompt3)
+        else -> Pair(R.drawable.lemon_restart, R.string.prompt4)
+    }
 
-    val painterResources = listOf(
-        R.drawable.lemon_tree,
-        R.drawable.lemon_squeeze,
-        R.drawable.lemon_drink,
-        R.drawable.lemon_restart, )
-
-    val prompts = listOf(
-        R.string.prompt1,
-        R.string.prompt2,
-        R.string.prompt3,
-        R.string.prompt4,
-    )
-//
-//    when(paintResource){
-//        R.drawable.lemon_tree ->
-//        R.drawable.lemon_squeeze ->
-//        R.drawable.lemon_drink ->
-//        R.drawable.lemon_restart ->
-//    }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(16.dp))
                 .background(Color.Green)
                 .padding(bottom = 16.dp)
                 .clickable {
-                    for (paint in painterResources) {
-                        paintResource = paint
-                    }
-
-                    for (prompt in prompts) {
-                        promptText = prompt
-                    }
+                    index = (index % 4) + 1
                 }
-
-        ){
+        ) {
             Image(
                 painter = painterResource(id = paintResource),
                 contentDescription = null,
