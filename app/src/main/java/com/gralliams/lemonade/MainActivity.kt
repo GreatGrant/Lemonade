@@ -97,7 +97,7 @@ fun LemonadeApp() {
                 Box(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(16.dp))
-                        .background(Color(red = 225, green = 132, blue = 151, alpha = 183))
+                        .background(Color(red = 2, green = 181, blue = 100, alpha = 30))
                         .padding(bottom = 16.dp)
                         .clickable {
                             index = (index % 4) + 1
