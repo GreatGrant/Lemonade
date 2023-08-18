@@ -25,12 +25,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -39,54 +45,81 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LemonadeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LemonadeApp()
-                }
+                LemonadeApp()
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LemonadeApp() {
-    var index by remember { mutableStateOf(1) }
 
-    val (paintResource, promptText) = when (index) {
-        1 -> Pair(R.drawable.lemon_tree, R.string.prompt1)
-        2 -> Pair(R.drawable.lemon_squeeze, R.string.prompt2)
-        3 -> Pair(R.drawable.lemon_drink, R.string.prompt3)
-        else -> Pair(R.drawable.lemon_restart, R.string.prompt4)
-    }
-
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(16.dp))
-                .background(Color.Green)
-                .padding(bottom = 16.dp)
-                .clickable {
-                    index = (index % 4) + 1
-                }
-        ) {
-            Image(
-                painter = painterResource(id = paintResource),
-                contentDescription = null,
-                modifier = Modifier.padding(16.dp),
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                colors = TopAppBarDefaults.smallTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = stringResource(id = promptText),
-            fontSize = 18.sp
-        )
+    ){ innerPadding->
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.tertiaryContainer),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            var index by remember { mutableStateOf(1) }
+
+            val (paintResource, promptText) = when (index) {
+                1 -> Pair(R.drawable.lemon_tree, R.string.prompt1)
+                2 -> Pair(R.drawable.lemon_squeeze, R.string.prompt2)
+                3 -> Pair(R.drawable.lemon_drink, R.string.prompt3)
+                else -> Pair(R.drawable.lemon_restart, R.string.prompt4)
+            }
+
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(16.dp))
+                        .background(Color(red = 225, green = 132, blue = 151, alpha = 183))
+                        .padding(bottom = 16.dp)
+                        .clickable {
+                            index = (index % 4) + 1
+                        }
+                ) {
+                    Image(
+                        painter = painterResource(id = paintResource),
+                        contentDescription = null,
+                        modifier = Modifier.padding(16.dp),
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = stringResource(id = promptText),
+                    fontSize = 18.sp
+                )
+            }
+
+        }
+
     }
+
 }
 
 @Preview(
