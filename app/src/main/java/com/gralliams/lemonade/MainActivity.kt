@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    LemonadeApp()
                 }
             }
         }
@@ -55,6 +56,7 @@ fun LemonadeApp(){
 
     var paintResource by remember { mutableStateOf(R.drawable.lemon_tree)}
     var promptText by remember { mutableStateOf(R.string.prompt1) }
+    val index = 1
 
     val painterResources = listOf(
         R.drawable.lemon_tree,
@@ -68,6 +70,13 @@ fun LemonadeApp(){
         R.string.prompt3,
         R.string.prompt4,
     )
+//
+//    when(paintResource){
+//        R.drawable.lemon_tree ->
+//        R.drawable.lemon_squeeze ->
+//        R.drawable.lemon_drink ->
+//        R.drawable.lemon_restart ->
+//    }
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -76,7 +85,7 @@ fun LemonadeApp(){
             modifier = Modifier
                 .clip(shape = RoundedCornerShape(16.dp))
                 .background(Color.Green)
-                .padding(bottom = 8.dp)
+                .padding(bottom = 16.dp)
                 .clickable {
                     for (paint in painterResources) {
                         paintResource = paint
@@ -94,8 +103,11 @@ fun LemonadeApp(){
                 modifier = Modifier.padding(16.dp),
             )
         }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = stringResource(id = promptText))
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = stringResource(id = promptText),
+            fontSize = 18.sp
+        )
     }
 }
 
