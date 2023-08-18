@@ -92,7 +92,8 @@ fun LemonadeApp() {
 
             Column(
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
             ) {
                 Box(
                     modifier = Modifier
@@ -106,7 +107,8 @@ fun LemonadeApp() {
                     Image(
                         painter = painterResource(id = paintResource),
                         contentDescription = null,
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier
+                            .padding(16.dp),
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
